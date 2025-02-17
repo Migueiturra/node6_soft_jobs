@@ -7,8 +7,8 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 const initialForm = {
   email: 'docente@desafiolatam.com',
   password: '123456',
-  rol: 'Seleccione un rol',
-  lenguage: 'Seleccione un Lenguage'
+  rol: '',  // Inicializado como vacío
+  lenguaje: ''  // Inicializado como vacío
 }
 
 const Register = () => {
@@ -20,19 +20,22 @@ const Register = () => {
   const handleForm = (event) => {
     event.preventDefault()
 
+    // Validación de campos: asegurarse de que no tengan los valores predeterminados
     if (
       !user.email.trim() ||
       !user.password.trim() ||
-      user.rol === 'Seleccione un rol' ||
-      user.lenguage === 'Seleccione un Lenguage'
+      user.rol === '' ||  // Comprobamos que el rol no esté vacío
+      user.lenguaje === ''  // Comprobamos que el lenguaje no esté vacío
     ) {
-      return window.alert('Todos los campos son obligatorias.')
+      return window.alert('Todos los campos son obligatorios.')
     }
 
+    // Validación del email
     if (!emailRegex.test(user.email)) {
       return window.alert('El formato del email no es correcto!')
     }
 
+    // Enviar la solicitud para registrar el usuario
     axios.post(ENDPOINT.users, user)
       .then(() => {
         window.alert('Usuario registrado con éxito 😀.')
@@ -59,7 +62,7 @@ const Register = () => {
     <form onSubmit={handleForm} className='col-10 col-sm-6 col-md-3 m-auto mt-5'>
       <h1>Registrar nuevo usuario</h1>
       <hr />
-      <div className='form-group mt-1 '>
+      <div className='form-group mt-1'>
         <label>Email address</label>
         <input
           value={user.email}
@@ -70,7 +73,7 @@ const Register = () => {
           placeholder='Enter email'
         />
       </div>
-      <div className='form-group mt-1 '>
+      <div className='form-group mt-1'>
         <label>Password</label>
         <input
           value={user.password}
@@ -81,7 +84,7 @@ const Register = () => {
           placeholder='Password'
         />
       </div>
-      <div className='form-group mt-1 '>
+      <div className='form-group mt-1'>
         <label>Rol</label>
         <select
           value={user.rol}
@@ -89,21 +92,21 @@ const Register = () => {
           name='rol'
           className='form-select'
         >
-          <option disabled value="Seleccione un rol">Seleccione un rol</option>
+          <option value=''>Seleccione un rol</option>  {/* Cambiado para que el valor sea vacío */}
           <option value='Full Stack Developer'>Full Stack Developer</option>
           <option value='Frontend Developer'>Frontend Developer</option>
           <option value='Backend Developer'>Backend Developer</option>
         </select>
       </div>
       <div className='form-group mt-1'>
-        <label>Lenguage</label>
+        <label>lenguaje</label>
         <select
-          value={user.lenguage}
+          value={user.lenguaje}
           onChange={handleUser}
-          name='lenguage'
+          name='lenguaje'
           className='form-select'
         >
-          <option disabled value="Seleccione un Lenguage">Seleccione un Lenguage</option>
+          <option value=''>Seleccione un lenguaje</option>  {/* Cambiado para que el valor sea vacío */}
           <option value='JavaScript'>JavaScript</option>
           <option value='Python'>Python</option>
           <option value='Ruby'>Ruby</option>
