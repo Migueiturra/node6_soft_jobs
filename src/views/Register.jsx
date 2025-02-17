@@ -7,8 +7,8 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 const initialForm = {
   email: 'docente@desafiolatam.com',
   password: '123456',
-  rol: '',  // Inicializado como vacío
-  lenguaje: ''  // Inicializado como vacío
+  rol: '',
+  lenguaje: ''
 }
 
 const Register = () => {
@@ -20,34 +20,31 @@ const Register = () => {
   const handleForm = (event) => {
     event.preventDefault()
 
-    // Validación de campos: asegurarse de que no tengan los valores predeterminados
+  
     if (
       !user.email.trim() ||
       !user.password.trim() ||
-      user.rol === '' ||  // Comprobamos que el rol no esté vacío
-      user.lenguaje === ''  // Comprobamos que el lenguaje no esté vacío
+      user.rol === '' || 
+      user.lenguaje === ''  
     ) {
       return window.alert('Todos los campos son obligatorios.')
     }
 
-    // Validación del email
     if (!emailRegex.test(user.email)) {
       return window.alert('El formato del email no es correcto!')
     }
 
-    // Enviar la solicitud para registrar el usuario
     axios.post(ENDPOINT.users, user)
       .then(() => {
         window.alert('Usuario registrado con éxito 😀.')
         navigate('/login')
       })
       .catch(({ response: { data } }) => {
-        // Mostrar mensaje de error dependiendo de la respuesta
         console.error(data)
         if (data.error) {
-          window.alert(`${data.error} 🙁.`) // Si el error está en la propiedad `error`, mostrarlo
+          window.alert(`${data.error} 🙁.`) 
         } else {
-          window.alert('Ocurrió un error desconocido 🙁.') // Para errores que no tengan un mensaje claro
+          window.alert('Ocurrió un error desconocido 🙁.')
         }
       })
   }
@@ -92,7 +89,7 @@ const Register = () => {
           name='rol'
           className='form-select'
         >
-          <option value=''>Seleccione un rol</option>  {/* Cambiado para que el valor sea vacío */}
+          <option value=''>Seleccione un rol</option>  {}
           <option value='Full Stack Developer'>Full Stack Developer</option>
           <option value='Frontend Developer'>Frontend Developer</option>
           <option value='Backend Developer'>Backend Developer</option>
@@ -106,7 +103,7 @@ const Register = () => {
           name='lenguaje'
           className='form-select'
         >
-          <option value=''>Seleccione un lenguaje</option>  {/* Cambiado para que el valor sea vacío */}
+          <option value=''>Seleccione un lenguaje</option>  {}
           <option value='JavaScript'>JavaScript</option>
           <option value='Python'>Python</option>
           <option value='Ruby'>Ruby</option>
